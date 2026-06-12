@@ -1,0 +1,44 @@
+{
+  "suite": "governed-rag-eval",
+  "runUid": "governed-rag-eval-1781276219497",
+  "createdAt": "2026-06-12T14:56:59.497Z",
+  "cases": [
+    {
+      "caseId": "answered-grounded",
+      "passed": true,
+      "judgeScore": null,
+      "costUsd": 0,
+      "latencyMs": 1,
+      "steps": 3
+    },
+    {
+      "caseId": "refused-out-of-corpus",
+      "passed": true,
+      "judgeScore": null,
+      "costUsd": 0,
+      "latencyMs": 1,
+      "steps": 1
+    },
+    {
+      "caseId": "refused-fabricated-citation",
+      "passed": true,
+      "judgeScore": null,
+      "costUsd": 0,
+      "latencyMs": 1,
+      "steps": 3
+    },
+    {
+      "caseId": "refused-unverified",
+      "passed": true,
+      "judgeScore": null,
+      "costUsd": 0,
+      "latencyMs": 1,
+      "steps": 3
+    }
+  ],
+  "casesPassed": 4,
+  "casesTotal": 4,
+  "totalCostUsd": 0,
+  "totalLatencyMs": 4,
+  "avgJudgeScore": null
+}

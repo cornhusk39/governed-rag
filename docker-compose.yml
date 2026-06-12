@@ -1,0 +1,44 @@
+# Self-host path for Governed RAG.
+#
+# `docker compose up web` serves the read-only demo (the audit explorer and
+# recorded sessions over the committed snapshot) with no keys.
+#
+# Live mode is the CLI, run on demand against a persistent volume. Provide keys
+# via a local .env (see .env.example):
+#   docker compose run --rm cli ingest path.htm --cik ... --accession ... \
+#       --company "..." --form 10-Q --filing-date 2026-05-01
+#   docker compose run --rm cli query "your question"
+#   docker compose run --rm cli export /app/data/snapshot.json
+# Then point the web service at the exported snapshot to publish your own demo.
+
+services:
+  web:
+    build:
+      context: .
+      target: runtime
+    image: governed-rag
+    ports:
+      - "3000:3000"
+    environment:
+      # Serve the committed real-corpus snapshot by default. Repoint this at an
+      # exported snapshot on the shared volume to publish your own.
+      GOVERNED_RAG_DEMO_DATA: /app/packages/web/data/sample-snapshot.json
+    restart: unless-stopped
+
+  cli:
+    build:
+      context: .
+      target: runtime
+    image: governed-rag
+    # Only started explicitly (docker compose run cli ...), never with `up`.
+    profiles: ["tools"]
+    env_file:
+      - .env
+    entrypoint: ["node", "packages/cli/dist/index.js"]
+    environment:
+      GOVERNED_RAG_DB_PATH: /app/data/governed-rag.db
+    volumes:
+      - governed-rag-data:/app/data
+
+volumes:
+  governed-rag-data:

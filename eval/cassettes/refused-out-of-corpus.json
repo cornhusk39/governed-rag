@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "caseId": "refused-out-of-corpus",
+  "agent": "governed-rag",
+  "recordedAt": "2026-06-12T12:00:00.000Z",
+  "input": {
+    "query": "photosynthesis chlorophyll mitochondria xylophone"
+  },
+  "result": {
+    "output": {
+      "verdict": "refused",
+      "refusalReason": "low_retrieval_score",
+      "answerPresent": false,
+      "claimCount": 0,
+      "allClaimsSupported": false,
+      "citationsResolved": false,
+      "verificationVerdict": null,
+      "company": "Contoso Robotics Inc."
+    },
+    "trace": [
+      {
+        "type": "tool_call",
+        "call": {
+          "name": "retrieve",
+          "args": {},
+          "result": {}
+        }
+      }
+    ],
+    "metrics": {
+      "latencyMs": 1,
+      "costUsd": 0,
+      "steps": 1
+    }
+  }
+}

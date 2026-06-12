@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "caseId": "refused-fabricated-citation",
+  "agent": "governed-rag",
+  "recordedAt": "2026-06-12T12:00:00.000Z",
+  "input": {
+    "query": "risk factors actuators"
+  },
+  "result": {
+    "output": {
+      "verdict": "refused",
+      "refusalReason": "citation_precheck_failed",
+      "answerPresent": false,
+      "claimCount": 1,
+      "allClaimsSupported": false,
+      "citationsResolved": false,
+      "verificationVerdict": "unsupported",
+      "company": "Contoso Robotics Inc."
+    },
+    "trace": [
+      {
+        "type": "tool_call",
+        "call": {
+          "name": "retrieve",
+          "args": {},
+          "result": {}
+        }
+      },
+      {
+        "type": "tool_call",
+        "call": {
+          "name": "generate",
+          "args": {},
+          "result": {}
+        }
+      },
+      {
+        "type": "tool_call",
+        "call": {
+          "name": "verify",
+          "args": {},
+          "result": {}
+        }
+      }
+    ],
+    "metrics": {
+      "latencyMs": 1,
+      "costUsd": 0,
+      "steps": 3
+    }
+  }
+}

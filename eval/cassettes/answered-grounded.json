@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "caseId": "answered-grounded",
+  "agent": "governed-rag",
+  "recordedAt": "2026-06-12T12:00:00.000Z",
+  "input": {
+    "query": "net sales for the quarter"
+  },
+  "result": {
+    "output": {
+      "verdict": "answered",
+      "refusalReason": null,
+      "answerPresent": true,
+      "claimCount": 1,
+      "allClaimsSupported": true,
+      "citationsResolved": true,
+      "verificationVerdict": "supported",
+      "company": "Contoso Robotics Inc."
+    },
+    "trace": [
+      {
+        "type": "tool_call",
+        "call": {
+          "name": "retrieve",
+          "args": {},
+          "result": {}
+        }
+      },
+      {
+        "type": "tool_call",
+        "call": {
+          "name": "generate",
+          "args": {},
+          "result": {}
+        }
+      },
+      {
+        "type": "tool_call",
+        "call": {
+          "name": "verify",
+          "args": {},
+          "result": {}
+        }
+      }
+    ],
+    "metrics": {
+      "latencyMs": 1,
+      "costUsd": 0,
+      "steps": 3
+    }
+  }
+}

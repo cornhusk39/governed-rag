@@ -1,0 +1,131 @@
+{
+  "name": "governed-rag-eval",
+  "cases": [
+    {
+      "id": "answered-grounded",
+      "description": "In-corpus query produces a verified, span-cited answer.",
+      "input": {
+        "query": "net sales for the quarter"
+      },
+      "assertions": [
+        {
+          "kind": "output-field",
+          "path": "verdict",
+          "op": "equals",
+          "value": "answered"
+        },
+        {
+          "kind": "output-field",
+          "path": "allClaimsSupported",
+          "op": "equals",
+          "value": true
+        },
+        {
+          "kind": "output-field",
+          "path": "citationsResolved",
+          "op": "equals",
+          "value": true
+        },
+        {
+          "kind": "output-field",
+          "path": "verificationVerdict",
+          "op": "equals",
+          "value": "supported"
+        },
+        {
+          "kind": "tool-call-order",
+          "tools": [
+            "retrieve",
+            "generate",
+            "verify"
+          ]
+        },
+        {
+          "kind": "cost-budget",
+          "maxUsd": 0.05
+        },
+        {
+          "kind": "step-budget",
+          "maxSteps": 5
+        }
+      ]
+    },
+    {
+      "id": "refused-out-of-corpus",
+      "description": "Out-of-corpus query is refused before generation.",
+      "input": {
+        "query": "photosynthesis chlorophyll mitochondria xylophone"
+      },
+      "assertions": [
+        {
+          "kind": "output-field",
+          "path": "verdict",
+          "op": "equals",
+          "value": "refused"
+        },
+        {
+          "kind": "output-field",
+          "path": "refusalReason",
+          "op": "equals",
+          "value": "low_retrieval_score"
+        },
+        {
+          "kind": "tool-not-called",
+          "tool": "generate"
+        },
+        {
+          "kind": "tool-not-called",
+          "tool": "verify"
+        }
+      ]
+    },
+    {
+      "id": "refused-fabricated-citation",
+      "description": "An answer citing an unretrieved chunk is refused.",
+      "input": {
+        "query": "risk factors actuators"
+      },
+      "assertions": [
+        {
+          "kind": "output-field",
+          "path": "verdict",
+          "op": "equals",
+          "value": "refused"
+        },
+        {
+          "kind": "output-field",
+          "path": "refusalReason",
+          "op": "equals",
+          "value": "citation_precheck_failed"
+        }
+      ]
+    },
+    {
+      "id": "refused-unverified",
+      "description": "A claim the verifier cannot confirm is refused.",
+      "input": {
+        "query": "net sales for the quarter"
+      },
+      "assertions": [
+        {
+          "kind": "output-field",
+          "path": "verdict",
+          "op": "equals",
+          "value": "refused"
+        },
+        {
+          "kind": "output-field",
+          "path": "refusalReason",
+          "op": "equals",
+          "value": "unverified_claims"
+        },
+        {
+          "kind": "output-field",
+          "path": "verificationVerdict",
+          "op": "equals",
+          "value": "unsupported"
+        }
+      ]
+    }
+  ]
+}

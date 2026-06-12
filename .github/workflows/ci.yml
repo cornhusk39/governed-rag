@@ -1,0 +1,60 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# One run per ref; cancel superseded runs.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm build
+
+  eval-gate:
+    # Clone the public AgentProbe at a pinned commit, build it, and replay our
+    # committed cassettes against our baseline. A grounding, citation, or refusal
+    # regression flips a deterministic assertion and fails this job. No API key is
+    # needed: replay reads cached artifacts only.
+    runs-on: ubuntu-latest
+    env:
+      # Pinned for reproducibility. Bump deliberately when adopting AgentProbe
+      # changes; never float to a moving branch.
+      AGENTPROBE_REF: 556b79fd4f765eedeb17a6f2964fd01d9085f2d1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Clone AgentProbe at pinned commit
+        run: |
+          git clone --filter=blob:none https://github.com/cornhusk39/agentprobe.git "$RUNNER_TEMP/agentprobe"
+          git -C "$RUNNER_TEMP/agentprobe" checkout "$AGENTPROBE_REF"
+
+      - name: Build AgentProbe CLI
+        working-directory: ${{ runner.temp }}/agentprobe
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm --filter "@agentprobe/cli..." build
+
+      - name: Eval gate (replay against baseline)
+        run: |
+          node "$RUNNER_TEMP/agentprobe/packages/cli/dist/index.js" \
+            check --config "$GITHUB_WORKSPACE/eval/agentprobe.config.mjs"
