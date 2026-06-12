@@ -1,0 +1,25 @@
+{
+  "// note": "Shared compiler settings for the Node packages (core, cli); web is standalone. Each package extends this and adds its own outDir/include. paths let the workspace resolve cross-package imports to source during typecheck, while built artifacts resolve through the pnpm workspace symlink at runtime; paths resolve relative to this file's directory (the repo root). types is named explicitly because pnpm isolates packages and automatic @types discovery proved unreliable across the workspace.",
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "types": ["node"],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "paths": {
+      "@governed-rag/core": ["./packages/core/src/index.ts"],
+      "@governed-rag/core/*": ["./packages/core/src/*"]
+    }
+  }
+}

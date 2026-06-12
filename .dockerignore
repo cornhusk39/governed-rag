@@ -1,0 +1,20 @@
+# Rebuilt inside the image.
+node_modules
+**/node_modules
+**/dist
+**/.next
+**/*.tsbuildinfo
+
+# Local data, secrets, and VCS noise.
+.git
+.env
+.env.*
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+/data
+/index
+coverage
+**/.DS_Store

@@ -1,0 +1,7 @@
+packages:
+  - "packages/*"
+
+# better-sqlite3 ships a native addon and needs its install scripts to run. pnpm
+# blocks build scripts by default, so allow it explicitly when it is added.
+onlyBuiltDependencies:
+  - better-sqlite3

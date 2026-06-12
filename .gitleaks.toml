@@ -1,0 +1,31 @@
+# gitleaks configuration for Governed RAG.
+#
+# Extends the upstream default rule set, then allowlists the few places where
+# obviously-synthetic placeholders live. The principle: keep test and fixture
+# files in scope so a real key pasted anywhere is still caught, and only carve
+# out the specific patterns that are provably fake.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allow committed example placeholders and synthetic fixtures"
+paths = [
+  # The example env file documents variables with empty values.
+  '''\.env\.example$''',
+  # Recorded eval cassettes and synthetic PII fixtures contain fake, redacted
+  # data by construction.
+  '''eval/cassettes/.*\.json$''',
+  '''.*/fixtures/.*''',
+  # The committed read-only demo snapshot is public-domain SEC filing text with
+  # no secrets; keep scanners from false-positing on filing content.
+  '''packages/web/data/.*\.json$''',
+]
+regexes = [
+  # Empty placeholder assignments in the example env file.
+  '''ANTHROPIC_API_KEY=$''',
+  '''VOYAGE_API_KEY=$''',
+  '''QUERY_API_BEARER_TOKEN=$''',
+  # Obviously fake tokens used in tests and synthetic fixtures.
+  '''(?i)(test|fake|mock|dummy|example|redacted|synthetic)[-_]?(token|key|secret)''',
+]
