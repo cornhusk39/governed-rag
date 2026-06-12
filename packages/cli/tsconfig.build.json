@@ -1,0 +1,12 @@
+{
+  "// note": "Emits the shippable build to dist. paths is cleared here on purpose: during emit, cross-package imports must resolve to core's built dist (via the workspace symlink and core's package exports), not to its TypeScript source. The source mapping is only for no-emit typecheck. pnpm builds core before cli, so the dist types exist.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {}
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.ts"]
+}
