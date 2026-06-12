@@ -1,0 +1,25 @@
+{
+  "note": "Synthetic fixture filings for tests. These are fabricated documents for fictional companies, not real EDGAR filings. They exist so the ingest and retrieval paths can be tested offline with no network. The real corpus (AAPL, MSFT, NVDA, AMZN, GOOGL) is ingested live at M7.",
+  "filings": [
+    {
+      "file": "contoso-10q.htm",
+      "meta": {
+        "cik": "0001999001",
+        "accession": "0001999001-26-000007",
+        "company": "Contoso Robotics Inc.",
+        "form": "10-Q",
+        "filingDate": "2026-05-01"
+      }
+    },
+    {
+      "file": "northwind-10k.htm",
+      "meta": {
+        "cik": "0001999002",
+        "accession": "0001999002-26-000003",
+        "company": "Northwind Trading Co.",
+        "form": "10-K",
+        "filingDate": "2026-02-20"
+      }
+    }
+  ]
+}

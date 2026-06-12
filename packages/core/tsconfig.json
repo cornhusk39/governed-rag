@@ -1,0 +1,8 @@
+{
+  "// note": "Used for typecheck and editor tooling. Includes tests so type errors in tests are caught. noEmit keeps this separate from the build config.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src/**/*"]
+}

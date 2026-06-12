@@ -1,0 +1,11 @@
+{
+  "// note": "Emits the shippable build to dist. Tests are excluded so they never land in published output.",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.ts", "src/test-support/**"]
+}

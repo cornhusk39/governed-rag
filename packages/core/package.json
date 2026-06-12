@@ -1,0 +1,31 @@
+{
+  "name": "@governed-rag/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
+    "@opentelemetry/api": "^1.9.1",
+    "better-sqlite3": "^12.10.0",
+    "sqlite-vec": "^0.1.9",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@opentelemetry/sdk-trace-base": "^2.8.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^25.9.3"
+  }
+}
